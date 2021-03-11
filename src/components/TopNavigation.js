@@ -85,7 +85,7 @@ function User({ userName }) {
     ref: inputRef,
     type: 'file',
     onChange: handleFileUpload,
-    accept: 'image/jpeg, image/png',
+    accept: 'image/*, image/heic, video/*',
     hidden: true
   };
 

@@ -21,6 +21,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.3",
+    "simple-react-video-thumbnail": "0.0.7",
     "slick-carousel": "^1.8.1"
   },
   "scripts": {

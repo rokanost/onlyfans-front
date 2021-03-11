@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm, useField } from 'react-final-form-hooks';
 import ReactCrop from 'react-image-crop';
+import VideoPlayer from 'simple-react-video-thumbnail'
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -48,12 +49,15 @@ const useUploadPostButtonStyles = makeStyles({
   }
 });
 
-export function UploadPostDialog({ inputRef, src }) {
+export function UploadPostDialog({ inputRef, src}) {
+  console.log(src)
   const classes = useUploadPostButtonStyles();
   const [crop, setCrop] = useState({ aspect: 1, width: 600 });
+  const [videoPreview, setVideoPreview] = useState({});
   const [realImageDimensions, setRealImageDimensions] = useState({});
   const dispatch = useDispatch();
   const { loading, setLoading, formError } = useLoader();
+  const [mediaType, setMediaType] = useState({});
 
   const validate = ({ caption }) => {
     const errors = {};
@@ -74,7 +78,9 @@ export function UploadPostDialog({ inputRef, src }) {
     setLoading(true);
   };
 
-  const handleDialogClose = () => dispatch(uploadPostDialogActions.close());
+  const handleDialogClose = () => {
+    dispatch(uploadPostDialogActions.close())
+  };
 
   const {
     form,
@@ -114,6 +120,7 @@ export function UploadPostDialog({ inputRef, src }) {
         realImageHeight: image.height
       })
   };
+
   const dialogProps = {
     open: true,
     onClose: handleDialogClose,
@@ -134,7 +141,8 @@ export function UploadPostDialog({ inputRef, src }) {
   return (
     <Dialog {...dialogProps}>
       <DialogTitle className={classes.dialogTitle}>New Post</DialogTitle>
-      <ReactCrop {...reactCropProps} />
+      {mediaType == 'image' && <ReactCrop {...reactCropProps} />}
+      {mediaType == 'video' && videoPreview && <VideoPlayer videoUrl={videoPreview.url} snapshotAt={0} />}
       <form {...formProps}>
         <Textfield {...textFieldProps} />
         <Button {...buttonProps}>{loading && <Loader />}Share post</Button>

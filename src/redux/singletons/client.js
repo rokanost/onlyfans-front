@@ -11,7 +11,7 @@ class InstaError extends Error {
 
 class Client {
   constructor() {
-    this.baseURL = 'https://instaclone-api.now.sh';
+    this.baseURL = '';
     this.headers = {
       Authorization: null,
       Accept: 'application/json'
